@@ -13,7 +13,7 @@ def get_reviews(product_id):
     start_url = f"https://www.amazon.in/product-reviews/{product_id}/ref=cm_cr_arp_d_paging_btm_next_1?ie=UTF8&reviewerType=all_reviews&pageNumber=1"
     
     driver.get(start_url)
-    input("--> Log in if needed, then press Enter...")
+    # input("--> SCRIPT PAUSED: If needed, log in. Then, press Enter here to start scraping...")
 
     while True:
         print(f"Scraping page: {page_number}...")
@@ -28,12 +28,16 @@ def get_reviews(product_id):
 
         for review in review_elements:
             try:
-                rating = review.find_element(By.CSS_SELECTOR, '[data-hook="review-star-rating"] span').text.split()[0]
-                date = review.find_element(By.CSS_SELECTOR, '[data-hook="review-date"]').text.replace("Reviewed in India on ", "")
-                body = review.find_element(By.CSS_SELECTOR, '[data-hook="review-body"] span').text
-                reviews.append({"rating": rating, "date": date, "body": body})
-            except Exception:
+                reviewer = review.find_element(By.CSS_SELECTOR, ".a-profile-name").text.strip()
+                rating = review.find_element(By.CSS_SELECTOR, '[data-hook="review-star-rating"] span').get_attribute("innerHTML").strip().split(" ")[0]
+                date = review.find_element(By.CSS_SELECTOR, '[data-hook="review-date"]').text.strip().replace("Reviewed in India on ", "")
+                title = review.find_element(By.CSS_SELECTOR, '[data-hook="review-title"] span').get_attribute("innerHTML").strip().replace("<br>", "\n")
+                reviews.append({"reviewer": reviewer, "rating": rating, "date": date, "title": title})
+                print(f"Scraped review: {rating} stars on {date}")
+            except Exception as e:
+                print(f"Skipping review due to error: {e}")
                 continue
+
 
         try:
             next_page_li = driver.find_element(By.CSS_SELECTOR, "ul.a-pagination li.a-last")
@@ -44,6 +48,8 @@ def get_reviews(product_id):
             time.sleep(2)
         except NoSuchElementException:
             break
+        
+    print(f"Total reviews scraped: {len(reviews)}")
 
     driver.quit()
     return reviews

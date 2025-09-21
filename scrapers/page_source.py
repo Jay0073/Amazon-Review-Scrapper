@@ -29,10 +29,10 @@ def get_page_source(product_id):
     # --- SAVE THE FULL PAGE SOURCE ---
     print("Saving the page source...")
     page_source = driver.page_source
-    with open("amazon_page_source.html", "w", encoding="utf-8") as f:
+    with open("data/amazon_page_source.html", "w", encoding="utf-8") as f:
         f.write(page_source)
-    
-    print("\nSuccessfully saved the complete HTML to 'amazon_page_source.html'.")
+
+    print("\nSuccessfully saved the complete HTML to 'data/amazon_page_source.html'.")
     print("You can now close the script.")
     
     driver.quit()
