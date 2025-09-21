@@ -8,7 +8,7 @@ if __name__ == "__main__":
     all_reviews_filename = "data/all_amazon_reviews.csv"
     
     # Step 1: Scrape ASINs + review links from all search result pages
-    search_url = "https://www.amazon.in/s?k=paddle&crid=17RGU0LOFJERO&sprefix=paddl%2Caps%2C288&ref=nb_sb_noss_2"
+    search_url = "https://www.amazon.in/s?k=pickle+ball+paddle&crid=SG4XLGJ8WO80&sprefix=pickle+ball+paddle%2Caps%2C268&ref=nb_sb_ss_mvt-t11-ranker_1_18"
     print("Starting ASIN scraping...")
     asins, review_links = get_asins_and_review_links(search_url)
     save_asins_to_csv(asins, review_links)

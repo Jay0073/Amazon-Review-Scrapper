@@ -18,7 +18,7 @@ def get_page_source(product_id):
         print(f"Error initializing WebDriver: {e}")
         return
 
-    start_url = f"https://www.amazon.in/product-reviews/{product_id}/ref=cm_cr_arp_d_paging_btm_next_1?ieUTF8&reviewerType=all_reviews&pageNumber=1"
+    start_url = "https://www.amazon.in/s?k=laptops+under+50k"
     
     print("Attempting to navigate to the URL...")
     driver.get(start_url)
